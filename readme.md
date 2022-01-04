@@ -3,12 +3,14 @@ Since SD Card & DMA with CubeMX generated Code doesn't work, i want to offer the
 This repository contains a working example of STM32L476 FATFS on an SD card using freeRTOS. The main problem is using freeRTOS and Cube generated files for FATFS automatically using DMA on SDMMC peripheral. The DMA on SDMMC has a problem while using both RX and TX channels.<br/>
 I coded and tested this for STM32L476. For other microController this workflow should be also succesfull. This repository is a fully working example.<br/>
 **After every CubeMX code generating, changes remain and don't need to be applied again.**<br/>
-<br/>
+Solution in this project is using this ST community [post](https://community.st.com/s/feed/0D70X000006SpXHSA0).
+<br/><br/>
 
 #### 1. Generate Project in Cube MX
 Select SDMMC & DMA2 request on one single Channel 4. Not two channels for RX TX See attached CubeMX example. Also make sure `Generate peripheral initialization as a pair of .c/.h files` is checked.
 
-#### 2. In *Core/Src/sdmmc.c* file go to `void HAL_SD_MspInit(SD_HandleTypeDef* sdHandle)` and move all thing execpt `SDMMC1 DMA Init` section into `USER CODE SDMMC1_MspInit 0` section. Use compiler command `#if(false)/#endif` to disable codes between `USER CODE End SDMMC1_MspInit 0` and `USER CODE BEGIN SDMMC1_MspInit 1`. This would help our code to remain unchanged when generating Cube.
+#### 2. In generated Cod
+In *Core/Src/sdmmc.c* file go to `void HAL_SD_MspInit(SD_HandleTypeDef* sdHandle)` and move all thing execpt `SDMMC1 DMA Init` section into `USER CODE SDMMC1_MspInit 0` section. Use compiler command `#if(false)/#endif` to disable codes between `USER CODE End SDMMC1_MspInit 0` and `USER CODE BEGIN SDMMC1_MspInit 1`. This would help our code to remain unchanged when generating Cube.
 
 #### 3. In *Core/Src/stm32l4xx_it.c* apply changes in `void DMA2_Channel4_IRQHandler(void)` as below.
 ```
