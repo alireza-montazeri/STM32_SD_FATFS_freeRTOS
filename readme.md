@@ -2,6 +2,7 @@
 Since SD Card & DMA with CubeMX generated Code doesn't work, i want to offer the solution.<br/>
 This repository contains a working example of STM32L476 FATFS on an SD card using freeRTOS. The main problem is using freeRTOS and Cube generated files for FATFS automatically using DMA on SDMMC peripheral. The DMA on SDMMC has a problem while using both RX and TX channels.<br/>
 I coded and tested this for STM32L476. For other microController this workflow should be also succesfull. This repository is a fully working example.<br/>
+This is the CubeIDE project, and to use it, clone this repository in your directory, and then in CubeIDE, go to *File->Import->General->Import existing project* and choose your directory.<br/>
 **After every CubeMX code generating, changes remain and don't need to be applied again.**<br/>
 Solution in this project is using this ST community [post](https://community.st.com/s/feed/0D70X000006SpXHSA0).
 <br/><br/>
